@@ -5,25 +5,25 @@ import { supabase } from '../lib/supabaseClient';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
+    setError('');
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error: loginError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
-      setError('Login failed: ' + error.message);
+    if (loginError) {
+      setError(loginError.message);
       return;
     }
 
-    // Fetch user role from Supabase 'profiles' table
-    const { data: profileData, error: profileError } = await supabase
+    // Fetch user role from Supabase
+    const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('role')
       .eq('id', data.user.id)
@@ -35,18 +35,17 @@ export default function Login() {
     }
 
     // Redirect based on role
-    const role = profileData.role;
+    const role = profile.role;
     if (role === 'superadmin') router.push('/admin');
-    else if (role === 'supervisor') router.push('/ticket');
     else if (role === 'technician') router.push('/techboard');
+    else if (role === 'supervisor') router.push('/ticket');
     else if (role === 'hod') router.push('/hod');
-    else router.push('/dashboard'); // fallback
-
+    else router.push('/dashboard');
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Login</h1>
+    <div style={{ padding: '2rem', maxWidth: '400px', margin: 'auto' }}>
+      <h2>Safari Park Maintenance Login</h2>
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -54,17 +53,21 @@ export default function Login() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-        /><br /><br />
+          style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem' }}
+        />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        /><br /><br />
-        <button type="submit">Login</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+          style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem' }}
+        />
+        <button type="submit" style={{ width: '100%', padding: '0.5rem' }}>
+          Log In
+        </button>
       </form>
+      {error && <p style={{ color: 'red', marginTop: '1rem' }}>{error}</p>}
     </div>
   );
 }

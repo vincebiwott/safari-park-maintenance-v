@@ -1,2 +1,2 @@
 # Safari Park Maintenance System
-This is the full source code.
+A maintenance management system built with Next.js.

@@ -1,3 +1,3 @@
 export default function Home() {
-  return <h1>Safari Park Maintenance System - Home</h1>;
+  return <h1>Welcome to Safari Park Maintenance System</h1>;
 }

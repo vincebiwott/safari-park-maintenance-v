@@ -63,36 +63,78 @@ export default function SignUp() {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: 'auto', padding: '2rem' }}>
-      <h2>📝 User Sign-Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="full_name" placeholder="Full Name" onChange={handleChange} required /><br /><br />
-        <input name="nickname" placeholder="Nickname" onChange={handleChange} required /><br /><br />
-        <input name="email" type="email" placeholder="Email" onChange={handleChange} required /><br /><br />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} required /><br /><br />
+    <div className="min-h-screen bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in">
+        <h2 className="text-2xl font-bold text-center text-green-700 mb-6">📝 Safari Park User Sign-Up</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="full_name"
+            placeholder="Full Name"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+          />
+          <input
+            name="nickname"
+            placeholder="Nickname"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+          />
 
-        <select name="role" onChange={handleChange} required>
-          <option value="">Select Role</option>
-          <option value="Supervisor">Supervisor</option>
-          <option value="Technician">Technician</option>
-        </select><br /><br />
-
-        {formData.role === 'Technician' && (
-          <select name="tech_category" onChange={handleChange} required>
-            <option value="">Select Technician Type</option>
-            <option value="Plumber">Plumber</option>
-            <option value="Electrician">Electrician</option>
-            <option value="HVAC">HVAC</option>
-            <option value="Carpenter">Carpenter</option>
+          <select
+            name="role"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+          >
+            <option value="">Select Role</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Technician">Technician</option>
           </select>
-        )}<br /><br />
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'Signing Up...' : 'Sign Up'}
-        </button>
+          {formData.role === 'Technician' && (
+            <select
+              name="tech_category"
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-400"
+            >
+              <option value="">Select Technician Type</option>
+              <option value="Plumber">Plumber</option>
+              <option value="Electrician">Electrician</option>
+              <option value="HVAC">HVAC</option>
+              <option value="Carpenter">Carpenter</option>
+            </select>
+          )}
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md transition duration-300"
+          >
+            {loading ? 'Signing Up...' : 'Sign Up'}
+          </button>
+
+          {error && <p className="text-red-600 text-sm text-center">{error}</p>}
+        </form>
+      </div>
     </div>
   );
 }
